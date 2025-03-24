@@ -1,5 +1,6 @@
 // app/model/[slug]/page.tsx
 import { models } from "../data";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   return models.map((model) => ({
@@ -17,7 +18,7 @@ export default async function ModelDetailPage({ params }: Props) {
   const model = models.find((m) => m.slug === params.slug);
 
   if (!model) {
-    return <div className="p-8">モデルが見つかりませんでした。</div>;
+    notFound();
   }
 
   return (

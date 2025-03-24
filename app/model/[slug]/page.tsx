@@ -1,20 +1,18 @@
 import { models } from "../data";
 
-// 静的パスを生成
+// generateStaticParams の中で非同期にして Promise を返す
 export async function generateStaticParams() {
-  return models.map((model) => ({
+  return Promise.resolve(models.map((model) => ({
     slug: model.slug,
-  }));
+  })));
 }
 
-// props の型
 type Props = {
   params: {
     slug: string;
   };
 };
 
-// ✅ async を絶対に外すこと！
 export default function ModelDetailPage({ params }: Props) {
   const model = models.find((m) => m.slug === params.slug);
 
@@ -32,7 +30,10 @@ export default function ModelDetailPage({ params }: Props) {
       <h1 className="text-3xl font-bold mb-2">{model.name}</h1>
       <div className="flex gap-2 mb-4">
         {model.tags.map((tag) => (
-          <span key={tag} className="text-sm bg-pink-100 text-pink-800 px-2 py-1 rounded">
+          <span
+            key={tag}
+            className="text-sm bg-pink-100 text-pink-800 px-2 py-1 rounded"
+          >
             #{tag}
           </span>
         ))}

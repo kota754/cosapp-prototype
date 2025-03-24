@@ -1,6 +1,4 @@
-// app/model/[slug]/page.tsx
 import { models } from "../data";
-import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   return models.map((model) => ({
@@ -18,7 +16,7 @@ export default function ModelDetailPage({ params }: Props) {
   const model = models.find((m) => m.slug === params.slug);
 
   if (!model) {
-    notFound(); // ← ここで 404 ページに飛ばす
+    return <div className="p-8">モデルが見つかりませんでした。</div>;
   }
 
   return (
@@ -31,7 +29,10 @@ export default function ModelDetailPage({ params }: Props) {
       <h1 className="text-3xl font-bold mb-2">{model.name}</h1>
       <div className="flex gap-2 mb-4">
         {model.tags.map((tag) => (
-          <span key={tag} className="text-sm bg-pink-100 text-pink-800 px-2 py-1 rounded">
+          <span
+            key={tag}
+            className="text-sm bg-pink-100 text-pink-800 px-2 py-1 rounded"
+          >
             #{tag}
           </span>
         ))}

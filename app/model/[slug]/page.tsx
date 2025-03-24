@@ -2,7 +2,7 @@
 import { models } from "../data";
 import { notFound } from "next/navigation";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return models.map((model) => ({
     slug: model.slug,
   }));
